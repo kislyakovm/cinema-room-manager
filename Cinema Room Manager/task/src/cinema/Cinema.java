@@ -14,15 +14,62 @@ public class Cinema {
         System.out.println("Enter the number of seats in each row:");
         int seatsInRow = scanner.nextInt();
 
-        int profit = 0;
+        int[][] hall = new int[rows][seatsInRow];
 
-        if (rows * seatsInRow < 60) {
-            profit = rows * seatsInRow * 10;
-        } else {
-            profit = (((rows / 2) * 10) + ((rows - (rows / 2)) * 8)) * seatsInRow;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < seatsInRow; j++) {
+                hall[i][j] = 'S';
+            }
         }
 
-        System.out.println("Total income:");
-        System.out.println("$" + profit);
+        //print hall
+        System.out.println();
+        System.out.println("Cinema:");
+        System.out.print(" ");
+        for (int k = 1; k <= seatsInRow; k++) System.out.print(" " + k);
+        System.out.println();
+
+        for (int i = 0; i < rows; i++) {
+            System.out.print(i + 1);
+            for (int j = 0; j < seatsInRow; j++) {
+                System.out.print(" " + (char)hall[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        System.out.println("Enter a row number:");
+        int row = scanner.nextInt();
+
+        System.out.println("Enter a seat number in that row:");
+        int seatInRow = scanner.nextInt();
+
+        System.out.println();
+
+        if (rows * seatsInRow < 60) {
+            System.out.println("Ticket price: $10");
+        } else {
+            System.out.println(row <= rows / 2 ? "Ticket price: $10" : "Ticket price: $8");
+        }
+
+        // seat reservation
+        hall[row - 1][seatInRow - 1] = 'B';
+
+        // print hall
+        System.out.println();
+        System.out.println("Cinema:");
+        System.out.print(" ");
+        for (int k = 1; k <= seatsInRow; k++) System.out.print(" " + k);
+        System.out.println();
+
+        for (int i = 0; i < rows; i++) {
+            System.out.print(i + 1);
+            for (int j = 0; j < seatsInRow; j++) {
+                System.out.print(" " + (char)hall[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+
     }
 }
