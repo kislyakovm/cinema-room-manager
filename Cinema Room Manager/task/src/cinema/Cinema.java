@@ -5,39 +5,65 @@ import java.util.Scanner;
 public class Cinema {
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
 
+        boolean isExit = false;
+        int action;
+
+        // read rows and seats
         System.out.println("Enter the number of rows:");
         int rows = scanner.nextInt();
 
         System.out.println("Enter the number of seats in each row:");
         int seatsInRow = scanner.nextInt();
 
-        int[][] hall = new int[rows][seatsInRow];
+        char[][] hall = formingEmptyHall(rows, seatsInRow);
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < seatsInRow; j++) {
-                hall[i][j] = 'S';
-            }
+        while (!isExit) {
+            action = printMenuInputAction();
+            isExit = chooseAction(action, isExit, rows, seatsInRow, hall);
         }
+    }
 
-        //print hall
+    public static void showTheSeats(int rows, int seatsInRow, char[][] hall) {
         System.out.println();
         System.out.println("Cinema:");
         System.out.print(" ");
+
         for (int k = 1; k <= seatsInRow; k++) System.out.print(" " + k);
         System.out.println();
 
         for (int i = 0; i < rows; i++) {
             System.out.print(i + 1);
             for (int j = 0; j < seatsInRow; j++) {
-                System.out.print(" " + (char)hall[i][j]);
+                System.out.print(" " + hall[i][j]);
             }
             System.out.println();
         }
-        System.out.println();
+    }
 
+    public static int printMenuInputAction() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println();
+        System.out.println("1. Show the seats");
+        System.out.println("2. Buy a ticket");
+        System.out.println("0. Exit");
+
+        return scanner.nextInt();
+    }
+
+    public static boolean chooseAction(int action, boolean isExit, int rows, int seatsInRow, char[][] hall) {
+        switch (action) {
+            case 1 -> showTheSeats(rows, seatsInRow, hall);
+            case 2 -> buyTicket(rows, seatsInRow, hall);
+            case 0 -> isExit = true;
+        }
+        return isExit;
+    }
+
+    public static void buyTicket(int rows, int seatsInRow, char[][] hall) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a row number:");
         int row = scanner.nextInt();
 
@@ -54,22 +80,16 @@ public class Cinema {
 
         // seat reservation
         hall[row - 1][seatInRow - 1] = 'B';
+    }
 
-        // print hall
-        System.out.println();
-        System.out.println("Cinema:");
-        System.out.print(" ");
-        for (int k = 1; k <= seatsInRow; k++) System.out.print(" " + k);
-        System.out.println();
+    public static char[][] formingEmptyHall(int rows, int seatsInRow) {
+        char[][] hall = new char[rows][seatsInRow];
 
         for (int i = 0; i < rows; i++) {
-            System.out.print(i + 1);
             for (int j = 0; j < seatsInRow; j++) {
-                System.out.print(" " + (char)hall[i][j]);
+                hall[i][j] = 'S';
             }
-            System.out.println();
         }
-        System.out.println();
-
+        return hall;
     }
 }
